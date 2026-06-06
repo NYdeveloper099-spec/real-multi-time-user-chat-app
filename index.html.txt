@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Form</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --hover-blue: #1d4ed8;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 1rem;
+        }
+
+        .header h2 {
+            margin: 0;
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        button {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-generate {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-generate:hover {
+            background-color: #cbd5e1;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--hover-blue);
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="header">
+        <h2>SecureLogin</h2>
+        <div class="logo">L</div>
+    </div>
+
+    <form id="authForm">
+        <div class="input-group">
+            <label for="authCode">Authentication Code</label>
+            <input type="text" id="authCode" placeholder="Enter or generate code..." required>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="btn-generate" onclick="generateCode()">Generate Code</button>
+            <button type="submit" class="btn-submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function generateCode() {
+        // Generates a random 6-character alphanumeric code
+        const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let result = '';
+        for (let i = 0; i < 6; i++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        document.getElementById('authCode').value = result;
+    }
+
+    document.getElementById('authForm').onsubmit = function(e) {
+        e.preventDefault();
+        const code = document.getElementById('authCode').value;
+        alert('Code "' + code + '" submitted successfully!');
+    };
+</script>
+
+</body>
+</html>
