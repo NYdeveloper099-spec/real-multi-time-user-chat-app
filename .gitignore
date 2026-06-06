@@ -24,3 +24,7 @@ ios/build/
 
 # Expo
 .expo/
+
+# Personal notes
+DOC..txt
+GIT-GITHUB DOC.txt
