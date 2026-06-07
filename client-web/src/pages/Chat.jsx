@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "../context/AuthContext";
 
@@ -16,6 +16,8 @@ function Chat() {
 
   const [messages, setMessages] = useState([]);
 
+  const messagesEndRef = useRef(null);
+
   // RECEIVE REAL-TIME MESSAGES
   useEffect(() => {
 
@@ -32,6 +34,16 @@ function Chat() {
     };
 
   }, []);
+
+
+  useEffect(() => {
+
+  messagesEndRef.current
+    ?.scrollIntoView({
+      behavior: "smooth",
+    });
+
+}, [messages]);
 
   // SEND MESSAGE
   const sendMessage = () => {
@@ -172,6 +184,8 @@ function Chat() {
       }}
     >
 
+      <div ref={messagesEndRef} />
+
       <div
         style={{
           display: "flex",
@@ -214,13 +228,14 @@ function Chat() {
 
 <small
   style={{
-    color: "gray",
-    fontSize: "12px",
+    color: "#777",
+    fontSize: "10px",
+    display: "block",
+    textAlign: "right",
+    marginTop: "4px",
   }}
 >
-  {msg.createdAt
-    ? formatTime(msg.createdAt)
-    : "Now"}
+  {formatTime(msg.createdAt)}
 </small>
         </div>
 
