@@ -48,6 +48,8 @@ function Chat() {
 
       text: message,
 
+      createdAt: new Date(),
+
     };
 
     socket.emit("send_message", messageData);
@@ -65,15 +67,67 @@ function Chat() {
 
   };
 
+
   return (
 
     <div style={{ padding: 20 }}>
 
       <h1>Real-Time Chat</h1>
 
-      <button onClick={handleLogout}>
-        Logout
-      </button>
+      
+  <div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: "20px",
+    padding: "10px",
+    border: "1px solid #ddd",
+    borderRadius: "10px",
+  }}
+>
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+    }}
+  >
+    <img
+      src={
+        user.avatar
+          ? user.avatar
+          : `https://ui-avatars.com/api/?name=${user.username}`
+      }
+      alt="avatar"
+      width="60"
+      height="60"
+      style={{
+        borderRadius: "50%",
+        objectFit: "cover",
+      }}
+    />
+
+    <div>
+      <h3 style={{ margin: 0 }}>
+        {user.username}
+      </h3>
+
+      <p
+        style={{
+          margin: 0,
+          color: "gray",
+        }}
+      >
+        {user.email}
+      </p>
+    </div>
+  </div>
+
+  <button onClick={handleLogout}>
+    Logout
+  </button>
+</div>
 
       <hr />
 
@@ -93,6 +147,17 @@ function Chat() {
   const isMine =
     msg.sender === user._id;
 
+
+    const formatTime = (date) => {
+
+  return new Date(date)
+    .toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+};
+
   return (
 
     <div
@@ -103,7 +168,7 @@ function Chat() {
           isMine
             ? "flex-end"
             : "flex-start",
-        marginBottom: "15px",
+        marginBottom: "10px",
       }}
     >
 
@@ -111,13 +176,13 @@ function Chat() {
         style={{
           display: "flex",
           alignItems: "center",
-          maxWidth: "70%",
+          maxWidth: "300%",
           background:
             isMine
               ? "#DCF8C6"
               : "#F1F1F1",
           padding: "10px",
-          borderRadius: "12px",
+          borderRadius: "10px",
         }}
       >
 
@@ -143,10 +208,20 @@ function Chat() {
             {msg.username}
           </strong>
 
-          <p style={{ margin: 0 }}>
-            {msg.text}
-          </p>
+          <p>
+  {msg.text}
+</p>
 
+<small
+  style={{
+    color: "gray",
+    fontSize: "12px",
+  }}
+>
+  {msg.createdAt
+    ? formatTime(msg.createdAt)
+    : "Now"}
+</small>
         </div>
 
       </div>
